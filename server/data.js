@@ -1,113 +1,113 @@
 const categories = {
   VEGETABLE: {
-    id: "vegetables",
-    name: "Vegetables and legumes/beans",
+    id: 'vegetables',
+    name: 'Vegetables and legumes/beans',
   },
   GRAIN: {
-    id: "grain",
-    name: "Grain (cereal) foods",
+    id: 'grain',
+    name: 'Grain (cereal) foods',
   },
   MEAL: {
-    id: "meal",
-    name:
-      "Lean meats and poultry, fish, eggs, tofu, nuts and seeds and legumes/beans",
+    id: 'meal',
+    name: 'Lean meats and poultry, fish, eggs, tofu, nuts and seeds and legumes/beans',
   },
   LACTOSE: {
-    id: "lactose",
-    name: "Milk, yoghurt cheese and/or alternatives",
+    id: 'lactose',
+    name: 'Milk, yoghurt cheese and/or alternatives',
   },
 };
 
 const data = [
   // VEGETABLES
   {
-    name: "Broccoli",
+    name: 'Broccoli',
     category: categories.VEGETABLE,
     price: 0.25,
   },
   {
-    name: "Brussels sprouts",
+    name: 'Brussels sprouts',
     category: categories.VEGETABLE,
     price: 0.31,
   },
   {
-    name: "Bok choy, cabbages",
+    name: 'Bok cho, cabbages',
     category: categories.VEGETABLE,
     price: 0.34,
   },
   {
-    name: "Cauliflower",
+    name: 'Cauliflower',
     category: categories.VEGETABLE,
     price: 0.15,
   },
   {
-    name: "Kale",
+    name: 'Kale',
     category: categories.VEGETABLE,
     price: 0.7,
   },
 
   // GRAIN
   {
-    name: "Bread",
+    name: 'Bread',
     category: categories.GRAIN,
     price: 0.2,
   },
   {
-    name: "Rice",
+    name: 'Rice',
     category: categories.GRAIN,
     price: 0.4,
   },
   {
-    name: "Pasta",
+    name: 'Pasta',
     category: categories.GRAIN,
     price: 0.3,
   },
 
   // MEAL
   {
-    name: "Beef",
+    name: 'Beef',
     category: categories.GRAIN,
     price: 5.2,
   },
   {
-    name: "Lamb",
+    name: 'Lamb',
     category: categories.GRAIN,
     price: 7.5,
   },
   {
-    name: "Veal",
+    name: 'Veal',
     category: categories.GRAIN,
     price: 6.0,
   },
   {
-    name: "Pork",
+    name: 'Pork',
     category: categories.GRAIN,
     price: 4.2,
   },
   {
-    name: "Kangaroo",
+    name: 'Kangaroo',
     category: categories.GRAIN,
     price: 10.5,
   },
 
   // LACTOSE
   {
-    name: "Milk",
+    name: 'Milk',
     category: categories.LACTOSE,
     price: 0.5,
   },
   {
-    name: "Yoghurt",
+    name: 'Yoghurt',
     category: categories.LACTOSE,
     price: 0.8,
   },
   {
-    name: "Cheese",
+    name: 'Cheese',
     category: categories.LACTOSE,
     price: 1.0,
   },
 ];
 
+// eslint-disable-next-line no-undef
 module.exports = {
   categories: Object.keys(categories).map((key) => categories[key]),
   data: data.map((item, key) => ({ id: key + 1, ...item })),

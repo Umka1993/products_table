@@ -1,4 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { render } from 'react-dom';
+import ProductsContext from './context';
+import App from './components/App';
+import { Product } from './types';
 
-render(<div>Hello World!</div>, document.getElementById('root'));
+const Main = () => {
+  const [products, setProducts] = useState<Product[]>();
+
+  return (
+    <ProductsContext.Provider value={{ products: products, setProducts }}>
+      <App />
+    </ProductsContext.Provider>
+  );
+};
+
+render(
+  <>
+    <Main />
+  </>,
+  document.getElementById('root'),
+);
