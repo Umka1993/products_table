@@ -13,17 +13,23 @@ export interface Product {
 export interface IProductContext {
   products: Product[];
   setProducts?: (arg: Product[]) => void;
+  basketProducts: Product[];
+  setBasketProducts: (arg: Product[]) => void;
 }
 
 export interface IHeadItem {
   itemName: string;
-  sorting: 'desc' | 'asc';
+  sort: ISortParameter;
   isSorted: boolean;
-  toggleSortParameter: () => void;
+  toggleSortParameter: (value: ISortParameter) => void;
 }
 
 export interface ITableBody {
-  sortParameter: 'desc' | 'asc';
-  products: Product[];
-  setProducts?: (arg: Product[]) => void;
+  sort: ISortParameter;
+  setProductsList?: (arg: Product[]) => void;
+  productsList: Product[];
+}
+export interface ISortParameter {
+  sorting: 'asc' | 'desc' | 'default';
+  templateName: string;
 }

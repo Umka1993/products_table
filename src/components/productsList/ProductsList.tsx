@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import ProductsContext from '../../context';
-import { IProductContext } from '../../types';
+import { ISortParameter, IProductContext, Product } from '../../types';
 import s from './productsList.module.scss';
 import { HeadItem } from '../headItem/HeadItem';
 import { TableBody } from '../tableBody/TableBody';
+// import { NavLink } from 'react-router-dom';
+import { ReactComponent as Basket } from '../../assets/basket.svg';
 
 const ProductsList = () => {
-  const { products, setProducts } = useContext<Partial<IProductContext>>(ProductsContext);
-  const [sortParameter, setSortParameter] = useState<'desc' | 'asc'>('asc');
   const tableHead = [
     { id: 1, name: 'Category', isSorted: true },
     { id: 2, name: 'Name', isSorted: false },
@@ -15,11 +15,30 @@ const ProductsList = () => {
     { id: 4, name: 'Actions', isSorted: false },
   ];
 
-  const toggleSortParameter = () => {
-    if (sortParameter === 'asc') {
-      setSortParameter('desc');
+  const defaultSort: ISortParameter = {
+    sorting: 'default',
+    templateName: '',
+  };
+
+  const { products, setProducts, basketProducts } = useContext<Partial<IProductContext>>(ProductsContext);
+  const [productsList, setProductsList] = useState<Product[] | null>();
+  const [sort, setSort] = useState<ISortParameter>(defaultSort);
+
+  const toggleSortParameter = (sortParametersObj: ISortParameter) => {
+    if (sortParametersObj.templateName === sort.templateName) {
+      switch (sortParametersObj.sorting) {
+        case 'default':
+          setSort({ templateName: sortParametersObj.templateName, sorting: 'asc' });
+          break;
+        case 'asc':
+          setSort({ templateName: sortParametersObj.templateName, sorting: 'desc' });
+          break;
+        case 'desc':
+          setSort({ templateName: sortParametersObj.templateName, sorting: 'default' });
+          break;
+      }
     } else {
-      setSortParameter('asc');
+      setSort({ templateName: sortParametersObj.templateName, sorting: 'asc' });
     }
   };
 
@@ -31,38 +50,51 @@ const ProductsList = () => {
           setProducts(json);
         }
       });
-  }, [setProducts]);
+  }, []);
 
-  // console.log(products)
-  // console.log(sortParameter)
+  useEffect(() => {
+    setProductsList(products);
+  }, [products]);
 
-  if (products?.length) {
+  // console.log(basketProducts);
+
+  if (productsList?.length && Object.keys(sort).length) {
     return (
-      <div className={s.table}>
-        <div className="container">
-          <div className={s.wrapper}>
-            <table>
-              <thead>
-                <tr>
-                  {tableHead?.map((headItem) => (
-                    <HeadItem
-                      key={headItem.id}
-                      isSorted={headItem.isSorted}
-                      sorting={sortParameter}
-                      itemName={headItem.name}
-                      toggleSortParameter={toggleSortParameter}
-                    />
-                  ))}
-                </tr>
-              </thead>
-
-              <tbody>
-                <TableBody products={products} sortParameter={sortParameter} setProducts={setProducts} />
-              </tbody>
-            </table>
+      <>
+        <div className={s.basket}>
+          <div className="container">
+            <div className={s.basketWrapper}>
+              <Basket className={s.basketBody} />
+              <span>{basketProducts?.length}</span>
+            </div>
           </div>
         </div>
-      </div>
+        <div className={s.table}>
+          <div className="container">
+            <div className={s.wrapper}>
+              <table>
+                <thead>
+                  <tr>
+                    {tableHead?.map((headItem) => (
+                      <HeadItem
+                        key={headItem.id}
+                        isSorted={headItem.isSorted}
+                        sort={sort}
+                        itemName={headItem.name}
+                        toggleSortParameter={toggleSortParameter}
+                      />
+                    ))}
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <TableBody sort={sort} productsList={productsList} setProductsList={setProductsList} />
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </>
     );
   } else {
     return (

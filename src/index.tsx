@@ -6,9 +6,17 @@ import { Product } from './types';
 
 const Main = () => {
   const [products, setProducts] = useState<Product[]>();
+  const [basketProducts, setBasketProducts] = useState<Product[]>([]);
 
   return (
-    <ProductsContext.Provider value={{ products: products, setProducts }}>
+    <ProductsContext.Provider
+      value={{
+        products: products,
+        setProducts,
+        basketProducts: basketProducts,
+        setBasketProducts,
+      }}
+    >
       <App />
     </ProductsContext.Provider>
   );

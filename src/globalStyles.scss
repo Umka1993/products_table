@@ -10,3 +10,21 @@
   max-width: 80%;
   margin: 0 auto;
 }
+
+svg {
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+}
+
+.default {
+  fill: lightgray;
+}
+.asc,.desc {
+  fill: black;
+}
+
+.desc{
+  transform: rotateX(180deg);
+  margin-top: 3px;
+}
