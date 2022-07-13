@@ -1,19 +1,22 @@
-import React, { FunctionComponent } from 'react';
-import { IHeadItem } from '../../types';
+import React, { FunctionComponent, useContext } from 'react';
+import { IHeadItem, IProductContext } from '../../types';
 import s from './sortingItem.module.scss';
 import { ReactComponent as Arrow } from '../../assets/arrow.svg';
+import ProductsContext from '../../context';
 
-export const HeadItem: FunctionComponent<IHeadItem> = ({ sort, isSorted, itemName, toggleSortParameter }) => {
+export const HeadItem: FunctionComponent<IHeadItem> = ({ isSorted, itemName, toggleSortParameter }) => {
+  const { sort } = useContext<Partial<IProductContext>>(ProductsContext);
+
   return (
     <>
       <th>
         {isSorted ? (
           <button
             className={s.button}
-            onClick={() => toggleSortParameter({ sorting: sort.sorting, templateName: itemName })}
+            onClick={() => toggleSortParameter({ sorting: sort?.sorting, templateName: itemName })}
           >
             <span> {itemName}</span>
-            {sort.templateName === itemName ? <Arrow className={sort.sorting} /> : <Arrow className={'default'} />}
+            {sort?.templateName === itemName ? <Arrow className={sort?.sorting} /> : <Arrow className={'default'} />}
           </button>
         ) : (
           `${itemName}`

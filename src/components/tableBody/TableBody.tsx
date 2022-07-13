@@ -1,83 +1,82 @@
 import React, { useContext, useEffect } from 'react';
-import { IBasketProduct, IProductContext, ISortParameter, ITableBody, Product } from '../../types';
+import { IProductContext, ITableBody, Product } from '../../types';
 import ProductsContext from '../../context';
 import { sorting } from '../../helpers/sorting';
-import { log } from 'util';
+import s from './tableBody.module.scss';
+import { ButtonActionProduct } from '../buttonActionProduct/ButtonActionProduct';
 
-export const TableBody: React.FC<ITableBody> = ({ sort, setProductsList, productsList }) => {
-  const { products, setBasketProducts, basketProducts } = useContext<Partial<IProductContext>>(ProductsContext);
+export const TableBody: React.FC<ITableBody> = ({ setProductsList, productsList }) => {
+  const { products, setBasketProducts, basketProducts, sort } = useContext<Partial<IProductContext>>(ProductsContext);
 
   useEffect(() => {
     sorting({ sort, products, setProductsList });
-  }, [sort.templateName, sort.sorting]);
+  }, [sort?.templateName, sort?.sorting]);
 
-  let basketArr: IBasketProduct[] = [];
+  // let basketArr: Product[] = [];
 
-  const addProductToBasket = (selectedProduct: Product) => {
-    if (basketProducts?.length) {
-      // console.log(basketProducts);
-      basketArr = [...basketProducts];
+  // const addProductToBasket = (selectedProduct: Product) => {
+  //   if (basketProducts?.length) {
+  //     basketArr = [...basketProducts];
+  //
+  //     const isNewProduct = basketArr.every((basketProduct) => basketProduct.id !== selectedProduct.id);
+  //     if (isNewProduct) {
+  //       selectedProduct.amount = 1;
+  //       basketArr?.push(selectedProduct);
+  //     } else {
+  //       basketArr.forEach((basketProduct) => {
+  //         if (basketProduct.id === selectedProduct.id) {
+  //           if (basketProduct.amount) {
+  //             basketProduct.amount++;
+  //           }
+  //         }
+  //       });
+  //     }
+  //   } else if (!basketProducts?.length) {
+  //     selectedProduct.amount = 1;
+  //     basketArr?.push(selectedProduct);
+  //   }
+  //
+  //   if (setBasketProducts) {
+  //     setBasketProducts(basketArr);
+  //   }
+  // };
+  //
+  // const removeProductToBasket = (selectedProduct: Product) => {
+  //   if (basketProducts) {
+  //     basketArr = [...basketProducts];
+  //
+  //     const isHasProduct = basketArr.some((basketProduct) => basketProduct.id === selectedProduct.id);
+  //
+  //     if (isHasProduct) {
+  //       const removeItem = () => {
+  //         const newBasketArr = basketArr.filter((basketProduct) => basketProduct.id !== selectedProduct.id);
+  //         if (setBasketProducts) {
+  //           setBasketProducts(newBasketArr);
+  //         }
+  //       };
+  //
+  //       const decrementAmount = () => {
+  //         basketArr.forEach((basketProduct) => {
+  //           if (basketProduct.id === selectedProduct.id && basketProduct.amount) {
+  //             --basketProduct.amount;
+  //           }
+  //         });
+  //
+  //         if (setBasketProducts) {
+  //           setBasketProducts(basketArr);
+  //         }
+  //       };
+  //
+  //       basketArr.forEach((basketProduct) => {
+  //         if (basketProduct.id === selectedProduct.id && basketProduct.amount) {
+  //           basketProduct.amount > 1 ? decrementAmount() : removeItem();
+  //         }
+  //       });
+  //     }
+  //   }
+  // };
 
-      // basketArr.forEach((basketProduct) => {
-      //   if (basketProduct.product.id === selectedProduct.id) {
-      //     basketProduct.amount++;
-      //   } else {
-      //     const newBasketProduct = {
-      //       amount: 1,
-      //       product: selectedProduct,
-      //     };
-      //     debugger
-      //     basketArr?.push(newBasketProduct);
-      //     debugger
-      //   }
-      // });
-
-      const isNewProduct = basketArr.some(
-        (basketProduct) => basketProduct.product.id !== selectedProduct.id,
-        // {
-        // if (basketProduct.product.id === selectedProduct.id) {
-        //   basketProduct.amount++;
-        // } else {
-        //   debugger
-        //   const newBasketProduct = {
-        //     amount: 1,
-        //     product: selectedProduct,
-        //   };
-        //   basketArr?.push(newBasketProduct);
-        // }
-        // }
-      );
-      console.log('isNewProduct', isNewProduct);
-    } else if (!basketProducts?.length) {
-      const newBasketProduct = {
-        amount: 1,
-        product: selectedProduct,
-      };
-      basketArr?.push(newBasketProduct);
-    }
-
-    if (setBasketProducts) {
-      setBasketProducts(basketArr);
-    }
-  };
-
-  console.log('basketProducts', basketProducts);
-
-  const removeProductToBasket = (selectedProduct: any) => {
-    if (basketProducts) {
-      basketProducts.forEach((products) => {
-        if (products.product.id === selectedProduct.id) {
-          console.log(';;;;;;');
-        } else {
-          console.log(';;;;;;');
-        }
-      });
-    }
-  };
-
-  // console.log('basketProducts', basketProducts);
-
-  if (productsList) {
+  if (productsList && basketProducts && setBasketProducts) {
     return (
       <>
         {productsList.map((product) => (
@@ -85,10 +84,12 @@ export const TableBody: React.FC<ITableBody> = ({ sort, setProductsList, product
             <td>{product.category.name}</td>
             <td>{product.name}</td>
             <td>{product.price}</td>
-            <td>
-              <button onClick={() => removeProductToBasket(product)}>(-)</button>
-              Select
-              <button onClick={() => addProductToBasket(product)}>(+)</button>
+            <td className={s.buttons}>
+              <ButtonActionProduct
+                basketProducts={basketProducts}
+                product={product}
+                setBasketProducts={setBasketProducts}
+              />
             </td>
           </tr>
         ))}

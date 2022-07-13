@@ -2,19 +2,27 @@ import React, { useState } from 'react';
 import { render } from 'react-dom';
 import ProductsContext from './context';
 import App from './components/App';
-import { IBasketProduct, Product } from './types';
+import { ISortParameter, Product } from './types';
 
 const Main = () => {
   const [products, setProducts] = useState<Product[]>();
-  const [basketProducts, setBasketProducts] = useState<IBasketProduct[]>([]);
+  const [basketProducts, setBasketProducts] = useState<Product[]>([]);
+
+  const defaultSort: ISortParameter = {
+    sorting: 'default',
+    templateName: '',
+  };
+  const [sort, setSort] = useState<ISortParameter>(defaultSort);
 
   return (
     <ProductsContext.Provider
       value={{
-        products: products,
+        products,
         setProducts,
-        basketProducts: basketProducts,
+        basketProducts,
         setBasketProducts,
+        sort,
+        setSort,
       }}
     >
       <App />

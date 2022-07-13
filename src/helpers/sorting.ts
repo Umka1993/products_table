@@ -1,7 +1,7 @@
 import { ISortParameter, Product } from '../types';
 
 interface ISorting {
-  sort: ISortParameter;
+  sort: ISortParameter | undefined;
   products: Product[] | undefined;
   setProductsList: ((arg: Product[]) => void) | undefined;
 }
@@ -9,24 +9,24 @@ interface ISorting {
 export const sorting = ({ sort, products, setProductsList }: ISorting): void => {
   if (products) {
     const newProducts = [...products];
-    const sortTemplate = sort.templateName.toLocaleLowerCase();
+    const sortTemplate = sort?.templateName.toLocaleLowerCase();
     newProducts?.sort(function (a, b) {
       if (sortTemplate === 'category') {
-        switch (sort.sorting) {
+        switch (sort?.sorting) {
           case 'asc':
             return a.category.name > b.category.name ? 1 : -1;
           case 'desc':
             return a.category.name < b.category.name ? 1 : -1;
         }
       } else if (sortTemplate === 'price') {
-        switch (sort.sorting) {
+        switch (sort?.sorting) {
           case 'asc':
             return a.price > b.price ? 1 : -1;
           case 'desc':
             return a.price < b.price ? 1 : -1;
         }
       } else {
-        switch (sort.sorting) {
+        switch (sort?.sorting) {
           case 'default':
             return a.category.name > b.category.name ? 1 : 1;
           default:

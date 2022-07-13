@@ -1,11 +1,14 @@
 import React from 'react';
-import ProductsList from './productsList/ProductsList';
 import '../globalStyles.scss';
+import { BrowserRouter } from 'react-router-dom';
+import { AppRouter } from '../pages/AppRouter';
 
 const App = () => {
   return (
     <>
-      <ProductsList />
+      <BrowserRouter>
+        <AppRouter />
+      </BrowserRouter>
     </>
   );
 };

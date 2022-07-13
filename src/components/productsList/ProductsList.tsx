@@ -6,6 +6,7 @@ import { HeadItem } from '../headItem/HeadItem';
 import { TableBody } from '../tableBody/TableBody';
 // import { NavLink } from 'react-router-dom';
 import { ReactComponent as Basket } from '../../assets/basket.svg';
+import { NavLink } from 'react-router-dom';
 
 const ProductsList = () => {
   const tableHead = [
@@ -15,17 +16,13 @@ const ProductsList = () => {
     { id: 4, name: 'Actions', isSorted: false },
   ];
 
-  const defaultSort: ISortParameter = {
-    sorting: 'default',
-    templateName: '',
-  };
-
-  const { products, setProducts, basketProducts } = useContext<Partial<IProductContext>>(ProductsContext);
+  const { products, setProducts, basketProducts, sort, setSort } =
+    useContext<Partial<IProductContext>>(ProductsContext);
   const [productsList, setProductsList] = useState<Product[] | null>();
-  const [sort, setSort] = useState<ISortParameter>(defaultSort);
+  // const [sort, setSort] = useState<ISortParameter>(defaultSort);
 
   const toggleSortParameter = (sortParametersObj: ISortParameter) => {
-    if (sortParametersObj.templateName === sort.templateName) {
+    if (sortParametersObj.templateName === sort?.templateName && setSort) {
       switch (sortParametersObj.sorting) {
         case 'default':
           setSort({ templateName: sortParametersObj.templateName, sorting: 'asc' });
@@ -38,7 +35,9 @@ const ProductsList = () => {
           break;
       }
     } else {
-      setSort({ templateName: sortParametersObj.templateName, sorting: 'asc' });
+      if (setSort) {
+        setSort({ templateName: sortParametersObj.templateName, sorting: 'asc' });
+      }
     }
   };
 
@@ -56,15 +55,15 @@ const ProductsList = () => {
     setProductsList(products);
   }, [products]);
 
-  if (productsList?.length && Object.keys(sort).length) {
+  if (productsList?.length) {
     return (
       <>
         <div className={s.basket}>
           <div className="container">
-            <div className={s.basketWrapper}>
+            <NavLink to={'/basket'} className={s.basketWrapper}>
               <Basket className={s.basketBody} />
               <span>{basketProducts?.length}</span>
-            </div>
+            </NavLink>
           </div>
         </div>
         <div className={s.table}>
@@ -77,7 +76,7 @@ const ProductsList = () => {
                       <HeadItem
                         key={headItem.id}
                         isSorted={headItem.isSorted}
-                        sort={sort}
+                        // sort={sort}
                         itemName={headItem.name}
                         toggleSortParameter={toggleSortParameter}
                       />
@@ -86,7 +85,7 @@ const ProductsList = () => {
                 </thead>
 
                 <tbody>
-                  <TableBody sort={sort} productsList={productsList} setProductsList={setProductsList} />
+                  <TableBody productsList={productsList} setProductsList={setProductsList} />
                 </tbody>
               </table>
             </div>
