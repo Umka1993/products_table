@@ -56,8 +56,6 @@ const ProductsList = () => {
     setProductsList(products);
   }, [products]);
 
-  // console.log(basketProducts);
-
   if (productsList?.length && Object.keys(sort).length) {
     return (
       <>

@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { render } from 'react-dom';
 import ProductsContext from './context';
 import App from './components/App';
-import { Product } from './types';
+import { IBasketProduct, Product } from './types';
 
 const Main = () => {
   const [products, setProducts] = useState<Product[]>();
-  const [basketProducts, setBasketProducts] = useState<Product[]>([]);
+  const [basketProducts, setBasketProducts] = useState<IBasketProduct[]>([]);
 
   return (
     <ProductsContext.Provider

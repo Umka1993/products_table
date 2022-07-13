@@ -10,11 +10,16 @@ export interface Product {
   id: number;
 }
 
+export interface IBasketProduct {
+  product: Product;
+  amount: number;
+}
+
 export interface IProductContext {
   products: Product[];
   setProducts?: (arg: Product[]) => void;
-  basketProducts: Product[];
-  setBasketProducts: (arg: Product[]) => void;
+  basketProducts: IBasketProduct[];
+  setBasketProducts: (arg: IBasketProduct[]) => void;
 }
 
 export interface IHeadItem {
