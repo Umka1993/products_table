@@ -30,24 +30,22 @@ svg {
   margin-top: 3px;
 }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      border: 3px solid black;
-      thead {
-        font-weight: bold;
-        font-size: 25px;
-        th {
-          border: 1px solid black;
-        }
-      }
-
-      tbody {
-        td {
-          border: 1px solid black;
-          padding: 5px;
-        }
-      }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 3px solid black;
+  thead {
+    font-weight: bold;
+    font-size: 25px;
+    th {
+      border: 1px solid black;
     }
+  }
 
-
+  tbody {
+    td {
+      border: 1px solid black;
+      padding: 5px;
+    }
+  }
+}
