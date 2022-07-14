@@ -4,7 +4,6 @@ import { ISortParameter, IProductContext, Product } from '../../types';
 import s from './productsList.module.scss';
 import { HeadItem } from '../headItem/HeadItem';
 import { TableBody } from '../tableBody/TableBody';
-// import { NavLink } from 'react-router-dom';
 import { ReactComponent as Basket } from '../../assets/basket.svg';
 import { NavLink } from 'react-router-dom';
 
@@ -16,10 +15,8 @@ const ProductsList = () => {
     { id: 4, name: 'Actions', isSorted: false },
   ];
 
-  const { products, setProducts, basketProducts, sort, setSort } =
-    useContext<Partial<IProductContext>>(ProductsContext);
+  const { products, basketProducts, sort, setSort } = useContext<Partial<IProductContext>>(ProductsContext);
   const [productsList, setProductsList] = useState<Product[] | null>();
-  // const [sort, setSort] = useState<ISortParameter>(defaultSort);
 
   const toggleSortParameter = (sortParametersObj: ISortParameter) => {
     if (sortParametersObj.templateName === sort?.templateName && setSort) {
@@ -40,17 +37,6 @@ const ProductsList = () => {
       }
     }
   };
-
-  useEffect(() => {
-    fetch('http://localhost:3001/api/products/')
-      .then((response) => response.json())
-      .then((json) => {
-        if (setProducts) {
-          setProducts(json);
-        }
-      });
-  }, []);
-
   useEffect(() => {
     setProductsList(products);
   }, [products]);
@@ -60,7 +46,10 @@ const ProductsList = () => {
       <>
         <div className={s.basket}>
           <div className="container">
-            <NavLink to={'/basket'} className={s.basketWrapper}>
+            <NavLink
+              to={`${basketProducts?.length ? '/basket' : ''}`}
+              className={`${s.basketWrapper} ${!basketProducts?.length ? s.basketWrapper__disabled : ''}`}
+            >
               <Basket className={s.basketBody} />
               <span>{basketProducts?.length}</span>
             </NavLink>

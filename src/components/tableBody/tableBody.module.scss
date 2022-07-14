@@ -2,6 +2,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  &__wrapper{
+    //display: grid;
+    //grid-template-columns: 25px  auto 25px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    span{
+      text-align: center;
+    }
+  }
   &__del,
   &__add {
     color: white;
@@ -13,6 +23,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    &:disabled{
+      background: gray;
+      font-size: 0;
+    }
   }
   &__del {
     background: brown;

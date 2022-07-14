@@ -1,9 +1,9 @@
 import { ISortParameter, Product } from '../types';
 
 interface ISorting {
-  sort: ISortParameter | undefined;
-  products: Product[] | undefined;
-  setProductsList: ((arg: Product[]) => void) | undefined;
+  sort?: ISortParameter;
+  products?: Product[];
+  setProductsList?: (arg: Product[]) => void;
 }
 
 export const sorting = ({ sort, products, setProductsList }: ISorting): void => {
