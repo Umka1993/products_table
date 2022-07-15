@@ -1,7 +1,6 @@
-import React, { FunctionComponent, useContext, useEffect, useState } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 import s from '../tableBody/tableBody.module.scss';
-import { IProductContext, Product } from '../../types';
-import ProductsContext from '../../context';
+import { Product } from '../../types';
 
 interface IButtonActionProduct {
   product: Product;
@@ -14,13 +13,9 @@ export const ButtonActionProduct: FunctionComponent<IButtonActionProduct> = ({
   basketProducts,
   setBasketProducts,
 }) => {
-  const [selectedProduct, toggleSelect] = useState<Product>();
-
   let basketArr: Product[] = [];
 
   const addProductToBasket = (selectedProduct: Product) => {
-    toggleSelect(selectedProduct);
-
     if (basketProducts?.length) {
       basketArr = [...basketProducts];
 
@@ -48,8 +43,6 @@ export const ButtonActionProduct: FunctionComponent<IButtonActionProduct> = ({
   };
 
   const removeProductToBasket = (selectedProduct: Product) => {
-    toggleSelect(selectedProduct);
-
     if (basketProducts) {
       basketArr = [...basketProducts];
 
@@ -86,20 +79,26 @@ export const ButtonActionProduct: FunctionComponent<IButtonActionProduct> = ({
 
   const hasSelected = () => {
     let amount: number | undefined;
-    if (selectedProduct?.id === product.id) {
+    if (basketProducts.length) {
       basketProducts.forEach((basketProduct) => {
-        if (selectedProduct && basketProduct.id === selectedProduct.id) {
+        if (basketProduct.id === product.id) {
           amount = basketProduct.amount;
         }
       });
 
       if (amount) {
         return amount;
+      } else {
+        return 'Select';
       }
     } else {
       return 'Select';
     }
   };
+
+  useEffect(() => {
+    hasSelected();
+  }, []);
 
   return (
     <div className={s.buttons__wrapper}>
@@ -110,10 +109,7 @@ export const ButtonActionProduct: FunctionComponent<IButtonActionProduct> = ({
       >
         -
       </button>
-      <div>
-        <span> {hasSelected()}</span>
-      </div>
-
+      <span> {hasSelected()}</span>
       <button className={s.buttons__add} onClick={() => addProductToBasket(product)}>
         +
       </button>

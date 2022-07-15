@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import { IProductContext } from './types';
 
-const ProductsContext = createContext<Partial<IProductContext>>({});
+const ProductsContext = createContext<IProductContext>({} as IProductContext);
 
 export default ProductsContext;

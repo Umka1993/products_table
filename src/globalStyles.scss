@@ -4,6 +4,7 @@
   outline: none;
   border: 0;
   box-sizing: border-box;
+  font-family: Geneva, Arial, Helvetica, sans-serif;
 }
 
 .container {
@@ -23,6 +24,7 @@ svg {
 .asc,
 .desc {
   fill: black;
+
 }
 
 .desc {
@@ -48,4 +50,12 @@ table {
       padding: 5px;
     }
   }
+}
+
+.emptyBasket {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
 }

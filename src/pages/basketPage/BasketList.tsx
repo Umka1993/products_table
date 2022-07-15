@@ -1,42 +1,35 @@
 import React, { useContext } from 'react';
 import { IProductContext } from '../../types';
 import ProductsContext from '../../context';
-import { TableBody } from '../../components/tableBody/TableBody';
 import { NavLink } from 'react-router-dom';
 import s from './basketPage.module.scss';
-import { HeadItem } from '../../components/headItem/HeadItem';
 import { ButtonActionProduct } from '../../components/buttonActionProduct/ButtonActionProduct';
-import { ReactComponent as Basket } from '../../assets/basket.svg';
+import { Basket } from '../../components/basket/Basket';
 
 interface ITableHead {
   id: number;
   name: string;
 }
 
+const tableHead: ITableHead[] = [
+  { id: 1, name: 'Category' },
+  { id: 2, name: 'Name' },
+  { id: 3, name: 'Quantity' },
+  { id: 4, name: 'Price' },
+  { id: 5, name: 'Actions' },
+];
+
 export const BasketList = () => {
-  const { setBasketProducts, basketProducts } = useContext<Partial<IProductContext>>(ProductsContext);
+  const { setBasketProducts, basketProducts } = useContext<IProductContext>(ProductsContext);
 
-  const tableHead: ITableHead[] = [
-    { id: 1, name: 'Category' },
-    { id: 2, name: 'Name' },
-    { id: 3, name: 'Quantity' },
-    { id: 4, name: 'Price' },
-    { id: 5, name: 'Actions' },
-  ];
-
-  console.log(basketProducts);
   if (basketProducts?.length) {
     return (
-      <div className="container">
-        <div>
+      <div>
+        <div className={s.header}>
           <NavLink className={s.goBack} to={'/'}>
             go back
           </NavLink>
-
-          <div className={s.basketWrapper}>
-            <Basket className={s.basketBody} />
-            <span>{basketProducts?.length}</span>
-          </div>
+          <Basket basketProducts={basketProducts} />
         </div>
 
         <table>
@@ -70,9 +63,12 @@ export const BasketList = () => {
     );
   } else {
     return (
-      <>
-        <h1>Loading...</h1>
-      </>
+      <div className="emptyBasket">
+        <h1>Your basket is empty</h1>
+        <NavLink className={s.goBack} to={'/'}>
+          fill the basket
+        </NavLink>
+      </div>
     );
   }
 };

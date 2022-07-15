@@ -2,13 +2,13 @@ import { ISortParameter, Product } from '../types';
 
 interface ISorting {
   sort?: ISortParameter;
-  products?: Product[];
-  setProductsList?: (arg: Product[]) => void;
+  productsList?: Product[];
+  setProductsList: (arg: Product[]) => void;
 }
 
-export const sorting = ({ sort, products, setProductsList }: ISorting): void => {
-  if (products) {
-    const newProducts = [...products];
+export const sorting = ({ sort, productsList, setProductsList }: ISorting): void => {
+  if (productsList) {
+    const newProducts = [...productsList];
     const sortTemplate = sort?.templateName.toLocaleLowerCase();
     newProducts?.sort(function (a, b) {
       if (sortTemplate === 'category') {
@@ -36,8 +36,6 @@ export const sorting = ({ sort, products, setProductsList }: ISorting): void => 
       return 0;
     });
 
-    if (setProductsList) {
-      setProductsList(newProducts);
-    }
+    setProductsList(newProducts);
   }
 };

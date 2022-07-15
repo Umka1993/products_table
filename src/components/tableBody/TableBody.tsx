@@ -1,82 +1,24 @@
 import React, { useContext, useEffect } from 'react';
-import { IProductContext, ITableBody, Product } from '../../types';
+import { IProductContext, ISortParameter, Product } from '../../types';
 import ProductsContext from '../../context';
 import { sorting } from '../../helpers/sorting';
 import s from './tableBody.module.scss';
 import { ButtonActionProduct } from '../buttonActionProduct/ButtonActionProduct';
 
-export const TableBody: React.FC<ITableBody> = ({ setProductsList, productsList }) => {
-  const { products, setBasketProducts, basketProducts, sort } = useContext<Partial<IProductContext>>(ProductsContext);
+interface ITableBody {
+  sort?: ISortParameter;
+  setProductsList: (arg: Product[]) => void;
+  productsList: Product[];
+}
+
+export const TableBody: React.FC<ITableBody> = ({ setProductsList, productsList, sort }) => {
+  const { setBasketProducts, basketProducts } = useContext<IProductContext>(ProductsContext);
 
   useEffect(() => {
-    sorting({ sort, products, setProductsList });
+    sorting({ sort, productsList, setProductsList });
   }, [sort?.templateName, sort?.sorting]);
 
-  // let basketArr: Product[] = [];
-
-  // const addProductToBasket = (selectedProduct: Product) => {
-  //   if (basketProducts?.length) {
-  //     basketArr = [...basketProducts];
-  //
-  //     const isNewProduct = basketArr.every((basketProduct) => basketProduct.id !== selectedProduct.id);
-  //     if (isNewProduct) {
-  //       selectedProduct.amount = 1;
-  //       basketArr?.push(selectedProduct);
-  //     } else {
-  //       basketArr.forEach((basketProduct) => {
-  //         if (basketProduct.id === selectedProduct.id) {
-  //           if (basketProduct.amount) {
-  //             basketProduct.amount++;
-  //           }
-  //         }
-  //       });
-  //     }
-  //   } else if (!basketProducts?.length) {
-  //     selectedProduct.amount = 1;
-  //     basketArr?.push(selectedProduct);
-  //   }
-  //
-  //   if (setBasketProducts) {
-  //     setBasketProducts(basketArr);
-  //   }
-  // };
-  //
-  // const removeProductToBasket = (selectedProduct: Product) => {
-  //   if (basketProducts) {
-  //     basketArr = [...basketProducts];
-  //
-  //     const isHasProduct = basketArr.some((basketProduct) => basketProduct.id === selectedProduct.id);
-  //
-  //     if (isHasProduct) {
-  //       const removeItem = () => {
-  //         const newBasketArr = basketArr.filter((basketProduct) => basketProduct.id !== selectedProduct.id);
-  //         if (setBasketProducts) {
-  //           setBasketProducts(newBasketArr);
-  //         }
-  //       };
-  //
-  //       const decrementAmount = () => {
-  //         basketArr.forEach((basketProduct) => {
-  //           if (basketProduct.id === selectedProduct.id && basketProduct.amount) {
-  //             --basketProduct.amount;
-  //           }
-  //         });
-  //
-  //         if (setBasketProducts) {
-  //           setBasketProducts(basketArr);
-  //         }
-  //       };
-  //
-  //       basketArr.forEach((basketProduct) => {
-  //         if (basketProduct.id === selectedProduct.id && basketProduct.amount) {
-  //           basketProduct.amount > 1 ? decrementAmount() : removeItem();
-  //         }
-  //       });
-  //     }
-  //   }
-  // };
-
-  if (productsList && basketProducts && setBasketProducts) {
+  if (productsList && basketProducts) {
     return (
       <>
         {productsList.map((product) => (

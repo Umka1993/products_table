@@ -12,27 +12,24 @@ export interface Product {
 }
 
 export interface IProductContext {
-  products: Product[];
+  products?: Product[];
   setProducts?: (arg: Product[]) => void;
   basketProducts: Product[];
   setBasketProducts: (arg: Product[]) => void;
   sort: ISortParameter;
   setSort: (arg: ISortParameter) => void;
+  categories?: ICategory[];
+  setCategories: (arg: ICategory[]) => void;
+  setFilteredCategories: (arg: ICategory[]) => void;
+  filteredCategories?: ICategory[];
 }
 
-export interface IHeadItem {
-  itemName: string;
-  // sort: ISortParameter;
-  isSorted: boolean;
-  toggleSortParameter: (value: ISortParameter) => void;
-}
-
-export interface ITableBody {
-  // sort: ISortParameter;
-  setProductsList?: (arg: Product[]) => void;
-  productsList: Product[];
-}
 export interface ISortParameter {
-  sorting: 'asc' | 'desc' | 'default' | undefined;
+  sorting?: 'asc' | 'desc' | 'default';
   templateName: string;
+}
+
+export interface ICategory {
+  id: string;
+  name: string;
 }

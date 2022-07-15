@@ -2,13 +2,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  &__wrapper{
-    //display: grid;
-    //grid-template-columns: 25px  auto 25px;
-    display: flex;
-    justify-content: space-between;
+  &__wrapper {
+    display: grid;
+    grid-template-columns: 25px  1fr 25px;
     width: 100%;
-    span{
+    span {
       text-align: center;
     }
   }
@@ -23,9 +21,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    &:disabled{
+    cursor: pointer;
+    &:disabled {
       background: gray;
       font-size: 0;
+      cursor: auto;
+
     }
   }
   &__del {
