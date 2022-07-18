@@ -1,0 +1,20 @@
+.basketButton{
+  margin-left: auto;
+  display: flex;
+  background: none;
+  &:disabled{
+    position: relative;
+    cursor: auto;
+    &:after {
+      content: '';
+      background: transparent;
+      backdrop-filter: blur(3px);
+      width: 65px;
+      height: 65px;
+      top: -6px;
+      left: 2px;
+      position: absolute;
+      z-index: 10;
+    }
+  }
+}

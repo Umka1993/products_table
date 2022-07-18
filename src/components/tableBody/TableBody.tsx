@@ -12,28 +12,24 @@ interface ITableBody {
 }
 
 export const TableBody: React.FC<ITableBody> = ({ setProductsList, productsList, sort }) => {
-  const { basketProducts } = useContext<IProductContext>(ProductsContext);
+  const { basketProducts, products = [] } = useContext<IProductContext>(ProductsContext);
 
   useEffect(() => {
-    sorting({ sort, productsList, setProductsList });
+    sorting({ sort, productsList, setProductsList, products });
   }, [sort?.templateName, sort?.sorting]);
 
-  if (productsList && basketProducts) {
-    return (
-      <>
-        {productsList.map((product) => (
-          <tr key={product.id}>
-            <td>{product.category.name}</td>
-            <td>{product.name}</td>
-            <td>{product.price}</td>
-            <td className={s.buttons}>
-              <ButtonActionProduct basketProducts={basketProducts} product={product} />
-            </td>
-          </tr>
-        ))}
-      </>
-    );
-  } else {
-    return <h1>Loading...</h1>;
-  }
+  return (
+    <>
+      {productsList?.map((product) => (
+        <tr key={product.id}>
+          <td>{product.category.name}</td>
+          <td>{product.name}</td>
+          <td>{product.price}</td>
+          <td className={s.buttons}>
+            <ButtonActionProduct basketProducts={basketProducts} product={product} />
+          </td>
+        </tr>
+      ))}
+    </>
+  );
 };

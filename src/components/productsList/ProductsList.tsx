@@ -4,7 +4,7 @@ import { ISortParameter, IProductContext, Product } from '../../types';
 import s from './productsList.module.scss';
 import { HeadItem } from '../headItem/HeadItem';
 import { TableBody } from '../tableBody/TableBody';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { Basket } from '../basket/Basket';
 
 const tableHead = [
@@ -23,22 +23,34 @@ const ProductsList = () => {
     filteredCategories,
   } = useContext<IProductContext>(ProductsContext);
   const [productsList, setProductsList] = useState<Product[] | null>();
+  const history = useHistory();
+  useEffect(() => {
+    if (filteredCategories?.length) {
+      productsFilter();
+    } else {
+      setProductsList(products);
+    }
+  }, [products, filteredCategories]);
+
+  const navigateToBasket = () => {
+    history.push('/basket');
+  };
 
   const toggleSortParameter = ({ templateName, sorting }: ISortParameter) => {
     if (templateName === sort?.templateName) {
       switch (sorting) {
         case 'default':
-          setSort({ templateName: templateName, sorting: 'asc' });
+          setSort({ templateName, sorting: 'asc' });
           break;
         case 'asc':
-          setSort({ templateName: templateName, sorting: 'desc' });
+          setSort({ templateName, sorting: 'desc' });
           break;
         case 'desc':
-          setSort({ templateName: templateName, sorting: 'default' });
+          setSort({ templateName, sorting: 'default' });
           break;
       }
     } else {
-      setSort({ templateName: templateName, sorting: 'asc' });
+      setSort({ templateName, sorting: 'asc' });
     }
   };
 
@@ -55,24 +67,15 @@ const ProductsList = () => {
     setProductsList(filteredProducts);
   };
 
-  useEffect(() => {
-    if (filteredCategories?.length) {
-      productsFilter();
-    } else {
-      setProductsList(products);
-    }
-  }, [products, filteredCategories]);
+  const isBasketEmpty = Boolean(!basketProducts?.length);
 
   if (productsList?.length) {
     return (
       <div>
         <div className={s.basket}>
-          <NavLink
-            to={`${basketProducts?.length ? '/basket' : ''}`}
-            className={`${s.basketWrapper} ${!basketProducts?.length ? s.basketWrapper__disabled : ''}`}
-          >
+          <button disabled={isBasketEmpty} onClick={() => navigateToBasket()} className={s.basketButton}>
             <Basket basketProducts={basketProducts} />
-          </NavLink>
+          </button>
         </div>
         <div className={s.table}>
           <div className={s.wrapper}>

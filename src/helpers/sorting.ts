@@ -4,11 +4,12 @@ interface ISorting {
   sort?: ISortParameter;
   productsList?: Product[];
   setProductsList: (arg: Product[]) => void;
+  products: Product[];
 }
 
-export const sorting = ({ sort, productsList, setProductsList }: ISorting): void => {
+export const sorting = ({ sort, productsList, setProductsList, products }: ISorting): void => {
   if (productsList) {
-    const newProducts = [...productsList];
+    let newProducts = [...productsList];
     const sortTemplate = sort?.templateName.toLocaleLowerCase();
     newProducts?.sort(function (a, b) {
       if (sortTemplate === 'category') {
@@ -17,6 +18,9 @@ export const sorting = ({ sort, productsList, setProductsList }: ISorting): void
             return a.category.name > b.category.name ? 1 : -1;
           case 'desc':
             return a.category.name < b.category.name ? 1 : -1;
+          case 'default':
+            newProducts = [...products];
+            break;
         }
       } else if (sortTemplate === 'price') {
         switch (sort?.sorting) {
@@ -24,6 +28,8 @@ export const sorting = ({ sort, productsList, setProductsList }: ISorting): void
             return a.price > b.price ? 1 : -1;
           case 'desc':
             return a.price < b.price ? 1 : -1;
+          case 'default':
+            newProducts = [...products];
         }
       } else {
         switch (sort?.sorting) {
