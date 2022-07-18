@@ -1,81 +1,19 @@
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { FunctionComponent, useContext, useEffect } from 'react';
 import s from '../tableBody/tableBody.module.scss';
-import { Product } from '../../types';
+import { IProductContext, Product } from '../../types';
+import ProductsContext from '../context/productTableContext';
 
 interface IButtonActionProduct {
   product: Product;
-  setBasketProducts: ((arg: Product[]) => void) | undefined;
   basketProducts: Product[];
 }
 
-export const ButtonActionProduct: FunctionComponent<IButtonActionProduct> = ({
-  product,
-  basketProducts,
-  setBasketProducts,
-}) => {
-  let basketArr: Product[] = [];
+export const ButtonActionProduct: FunctionComponent<IButtonActionProduct> = ({ product, basketProducts }) => {
+  const { addProductToBasket, removeProductToBasket } = useContext<IProductContext>(ProductsContext);
 
-  const addProductToBasket = (selectedProduct: Product) => {
-    if (basketProducts?.length) {
-      basketArr = [...basketProducts];
-
-      const isNewProduct = basketArr.every((basketProduct) => basketProduct.id !== selectedProduct.id);
-      if (isNewProduct) {
-        selectedProduct.amount = 1;
-        basketArr?.push(selectedProduct);
-      } else {
-        basketArr.forEach((basketProduct) => {
-          if (basketProduct.id === selectedProduct.id) {
-            if (basketProduct.amount) {
-              basketProduct.amount++;
-            }
-          }
-        });
-      }
-    } else if (!basketProducts?.length) {
-      selectedProduct.amount = 1;
-      basketArr?.push(selectedProduct);
-    }
-
-    if (setBasketProducts) {
-      setBasketProducts(basketArr);
-    }
-  };
-
-  const removeProductToBasket = (selectedProduct: Product) => {
-    if (basketProducts) {
-      basketArr = [...basketProducts];
-
-      const isHasProduct = basketArr.some((basketProduct) => basketProduct.id === selectedProduct.id);
-
-      if (isHasProduct) {
-        const removeItem = () => {
-          const newBasketArr = basketArr.filter((basketProduct) => basketProduct.id !== selectedProduct.id);
-          if (setBasketProducts) {
-            setBasketProducts(newBasketArr);
-          }
-        };
-
-        const decrementAmount = () => {
-          basketArr.forEach((basketProduct) => {
-            if (basketProduct.id === selectedProduct.id && basketProduct.amount) {
-              --basketProduct.amount;
-            }
-          });
-
-          if (setBasketProducts) {
-            setBasketProducts(basketArr);
-          }
-        };
-
-        basketArr.forEach((basketProduct) => {
-          if (basketProduct.id === selectedProduct.id && basketProduct.amount) {
-            basketProduct.amount > 1 ? decrementAmount() : removeItem();
-          }
-        });
-      }
-    }
-  };
+  useEffect(() => {
+    hasSelected();
+  }, []);
 
   const hasSelected = () => {
     let amount: number | undefined;
@@ -95,10 +33,6 @@ export const ButtonActionProduct: FunctionComponent<IButtonActionProduct> = ({
       return 'Select';
     }
   };
-
-  useEffect(() => {
-    hasSelected();
-  }, []);
 
   return (
     <div className={s.buttons__wrapper}>

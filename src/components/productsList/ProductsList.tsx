@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import ProductsContext from '../../context';
+import ProductsContext from '../context/productTableContext';
 import { ISortParameter, IProductContext, Product } from '../../types';
 import s from './productsList.module.scss';
 import { HeadItem } from '../headItem/HeadItem';

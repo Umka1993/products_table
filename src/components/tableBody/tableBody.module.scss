@@ -4,7 +4,7 @@
   align-items: center;
   &__wrapper {
     display: grid;
-    grid-template-columns: 25px  1fr 25px;
+    grid-template-columns: 25px 1fr 25px;
     width: 100%;
     span {
       text-align: center;
@@ -26,7 +26,6 @@
       background: gray;
       font-size: 0;
       cursor: auto;
-
     }
   }
   &__del {

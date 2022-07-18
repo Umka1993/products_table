@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { IProductContext, ISortParameter, Product } from '../../types';
-import ProductsContext from '../../context';
+import ProductsContext from '../context/productTableContext';
 import { sorting } from '../../helpers/sorting';
 import s from './tableBody.module.scss';
 import { ButtonActionProduct } from '../buttonActionProduct/ButtonActionProduct';
@@ -12,7 +12,7 @@ interface ITableBody {
 }
 
 export const TableBody: React.FC<ITableBody> = ({ setProductsList, productsList, sort }) => {
-  const { setBasketProducts, basketProducts } = useContext<IProductContext>(ProductsContext);
+  const { basketProducts } = useContext<IProductContext>(ProductsContext);
 
   useEffect(() => {
     sorting({ sort, productsList, setProductsList });
@@ -27,11 +27,7 @@ export const TableBody: React.FC<ITableBody> = ({ setProductsList, productsList,
             <td>{product.name}</td>
             <td>{product.price}</td>
             <td className={s.buttons}>
-              <ButtonActionProduct
-                basketProducts={basketProducts}
-                product={product}
-                setBasketProducts={setBasketProducts}
-              />
+              <ButtonActionProduct basketProducts={basketProducts} product={product} />
             </td>
           </tr>
         ))}

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { IProductContext } from '../../types';
-import ProductsContext from '../../context';
+import ProductsContext from '../../components/context/productTableContext';
 import { NavLink } from 'react-router-dom';
 import s from './basketPage.module.scss';
 import { ButtonActionProduct } from '../../components/buttonActionProduct/ButtonActionProduct';
@@ -49,11 +49,7 @@ export const BasketList = () => {
                 <td>{basketProduct.amount}</td>
                 <td>{basketProduct.price}</td>
                 <td>
-                  <ButtonActionProduct
-                    basketProducts={basketProducts}
-                    product={basketProduct}
-                    setBasketProducts={setBasketProducts}
-                  />
+                  <ButtonActionProduct basketProducts={basketProducts} product={basketProduct} />
                 </td>
               </tr>
             ))}

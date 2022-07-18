@@ -22,6 +22,8 @@ export interface IProductContext {
   setCategories: (arg: ICategory[]) => void;
   setFilteredCategories: (arg: ICategory[]) => void;
   filteredCategories?: ICategory[];
+  addProductToBasket: (arg: Product) => void;
+  removeProductToBasket: (arg: Product) => void;
 }
 
 export interface ISortParameter {

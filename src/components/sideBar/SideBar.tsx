@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import s from './sideBar.module.scss';
 import { ICategory, IProductContext } from '../../types';
-import ProductsContext from '../../context';
+import ProductsContext from '../context/productTableContext';
 
 export const SideBar = () => {
   const {
@@ -57,7 +57,6 @@ export const SideBar = () => {
             {category.name}
             <span>No products in this category</span>
           </label>
-
         ))}
       </form>
     </div>

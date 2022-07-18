@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { IProductContext } from './types';
+import { IProductContext } from '../../types';
 
 const ProductsContext = createContext<IProductContext>({} as IProductContext);
 

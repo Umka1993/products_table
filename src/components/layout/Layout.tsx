@@ -1,12 +1,8 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React from 'react';
 import s from './layout.module.scss';
 import { SideBar } from '../sideBar/SideBar';
 
-interface ILayout {
-  children: ReactNode;
-}
-
-export const Layout: FunctionComponent<ILayout> = ({ children }) => {
+export const Layout: React.FC = ({ children }) => {
   return (
     <div className="container">
       <div className={s.wrapper}>
