@@ -1,8 +1,8 @@
-.basketButton{
+.basketButton {
   margin-left: auto;
   display: flex;
   background: none;
-  &:disabled{
+  &:disabled {
     position: relative;
     cursor: auto;
     &:after {

@@ -67,7 +67,7 @@ const ProductsList = () => {
     setProductsList(filteredProducts);
   };
 
-  const isBasketEmpty = Boolean(!basketProducts?.length);
+  const isBasketEmpty = !basketProducts?.length;
 
   if (productsList?.length) {
     return (
